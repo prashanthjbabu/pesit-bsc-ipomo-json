@@ -29,16 +29,66 @@ public class ipomoservlet extends HttpServlet {
 		ip.getattn(usn);
 		//out.println("TEST="+ip.subj[0]);
 		//start tree build
-		JSONObject obj = new JSONObject();
-	obj.put("college",ip.college);
-	obj.put("name",ip.name);
-	obj.put("course",ip.course);
-	obj.put("usn",ip.rollno);
-	obj.put("college",ip.college);
-	obj.put("semester",ip.semester);
-	obj.put("section",ip.section);
-	out.println(obj.toJSONString());
+		String root="student";
+		 DocumentBuilderFactory documentBuilderFactory = 
+  DocumentBuilderFactory.newInstance();
+  DocumentBuilder documentBuilder = 
+ documentBuilderFactory.newDocumentBuilder();
+  Document document = documentBuilder.newDocument();
+  Element rootElement = document.createElement(root);
+  document.appendChild(rootElement);
+  
+   Element em = document.createElement("college");
+  em.appendChild(document.createTextNode(ip.college));
+  rootElement.appendChild(em);
+  
+   em = document.createElement("name");
+  em.appendChild(document.createTextNode(ip.name));
+  rootElement.appendChild(em);
+  
+      em = document.createElement("course");
+  em.appendChild(document.createTextNode(ip.course));
+  rootElement.appendChild(em);
+  
+      em = document.createElement("usn");
+  em.appendChild(document.createTextNode(ip.rollno));
+  rootElement.appendChild(em);
+  
+ em = document.createElement("semester");
+  em.appendChild(document.createTextNode(ip.semester));
+  rootElement.appendChild(em);
+  
+     em = document.createElement("section");
+  em.appendChild(document.createTextNode(ip.section));
+  rootElement.appendChild(em);
+  
+  
+	   for(int i=0;i<ip.ctr;i++)
+{
+//out.println(ip.subj[i]+"-"+ip.attn[i]+"-"+ip.total[i]+"-"+ip.percent[i]);
+//out.println("<br>");
+ em = document.createElement(ip.subj[i]);
+  //em.appendChild(document.createTextNode(ip.section));
+  rootElement.appendChild(em);
+  Element em2 = document.createElement("attended");
+	em2.appendChild(document.createTextNode(ip.attn[i]));
+	em.appendChild(em2);
+	
+	 Element em3 = document.createElement("total");
+	em3.appendChild(document.createTextNode(ip.total[i]));
+	em.appendChild(em3);
+	
+	 Element em4 = document.createElement("percentage");
+	em4.appendChild(document.createTextNode(ip.percent[i]));
+	em.appendChild(em4);
+}
 
+TransformerFactory transformerFactory = 
+  TransformerFactory.newInstance();
+  Transformer transformer = transformerFactory.newTransformer();
+  DOMSource source = new DOMSource(document);
+  StreamResult result =  new StreamResult(out);
+  transformer.transform(source, result);
     }catch(Exception e)
     {
     System.out.println("some gudbad happened.. "+e);
