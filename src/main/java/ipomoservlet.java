@@ -39,8 +39,16 @@ public class ipomoservlet extends HttpServlet {
 	obj.put("college",ip.college);
 	obj.put("semester",ip.semester);
 	obj.put("section",ip.section);
-	out.println(obj.toJSONString());
 
+	for(int i=0;i<ip.ctr;i++)
+	{
+		JSONObject node = new JSONObject();
+	node.put("attn",ip.attn[i]);
+	node.put("total",ip.total[i]);
+	node.put("percent",ip.percent[i]);
+	obj.put(ip.subj[i],node);
+	}
+		out.println(obj.toJSONString());
     }catch(Exception e)
     {
     System.out.println("some gudbad happened.. "+e);
