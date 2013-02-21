@@ -24,7 +24,7 @@ public class ipomoservlet extends HttpServlet {
     PrintWriter out=resp.getWriter();
    String usn=req.getParameter("usn");
    Date d=new Date();
-       System.out.println("Request for USN "+usn+" at time "+d);
+       System.out.println("Request for USN "+usn+" at  time "+d);
   	//String usn="1pe09cs059";
 		//String cpass=req.getParameter("cpass");
 		ipomo2 ip=new ipomo2();
